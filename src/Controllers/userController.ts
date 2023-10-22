@@ -1,9 +1,6 @@
 import { RequestHandler } from "express";
 
 import User from "../Models/UserModel";
-import { finished } from "stream";
-import { log } from "console";
-import { resolve } from "path";
 
 export const createUser: RequestHandler = async (req, res, next) => {
   try {
@@ -55,7 +52,7 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const isDeleted = await User.findByIdAndDelete(id);
-    if (!isDeleted) throw new Error("Failed to delete todo");
+    if (!isDeleted) throw new Error("Failed to delete User");
     return res.status(200).json({ message: "user deleted successfully!" });
   } catch (error: any) {
     return res.status(500).json({ message: error.message });

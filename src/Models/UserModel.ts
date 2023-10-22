@@ -23,6 +23,10 @@ const usersSchema = new mongoose.Schema({
         type:String,
         require:true,
       },
+      location:{
+          type:String,
+          require:false,
+      },
       picture:{
         type:Array<String>,
         require:false,
