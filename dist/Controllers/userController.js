@@ -95,23 +95,21 @@ const addRemoveFriend = async (req, res, next) => {
 };
 exports.addRemoveFriend = addRemoveFriend;
 const getUserFriends = async (req, res, next) => {
-    var _a;
     try {
         const { id } = req.params;
         const user = await UserModel_1.default.findById(id);
-        const friendArray = new Array;
+        const friendArray = [];
         if (user == null) {
             return res.status(200).json({ message: "user not found" });
         }
-        (_a = user.friends) === null || _a === void 0 ? void 0 : _a.forEach(async (friendId) => {
-            console.log("friendId = ", friendId);
-            if (UserModel_1.default.findById(friendId) != null) {
-                const friend = await UserModel_1.default.findById(friendId).then(res.json);
-                console.log("data friend", friend);
+        if (user.friends != null) {
+            for (const friendId of user.friends) {
+                const friend = await UserModel_1.default.findById(friendId);
                 friendArray.push(friend);
+                console.log("friend in loop", friend);
             }
-        });
-        console.log("friendList:", friendArray);
+        }
+        console.log(friendArray);
         return res.status(200).json({ data: friendArray });
     }
     catch (err) {

@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import User from "../Models/UserModel";
 import { finished } from "stream";
+import { log } from "console";
+import { resolve } from "path";
 
 export const createUser: RequestHandler = async (req, res, next) => {
   try {
@@ -90,15 +92,23 @@ export const getUserFriends : RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
+    const friendArray = [];
     if(user == null)
     {
       return res.status(200).json({message:"user not found"}) 
     }
+    if(user.friends != null)
+    {
+      for(const friendId of user.friends)
+      {
+        const friend = await User.findById(friendId)
+        friendArray.push(friend);
+        console.log("friend in loop",friend);
+      }
+    }
 
-    const friends = await Promise.all(
-      user.friends?.map((friendId) => User.findById(friendId))
-    );
-    return res.status(200).json({data:});
+    console.log(friendArray);
+    return res.status(200).json({data : friendArray });
   } catch (err : any) {
     return res.status(404).json({ message: err.message });
   }
