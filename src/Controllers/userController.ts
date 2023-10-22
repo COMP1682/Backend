@@ -1,12 +1,34 @@
 import { RequestHandler } from "express";
+import bcrypt from "bcrypt"
 
 import User from "../Models/UserModel";
 
 export const createUser: RequestHandler = async (req, res, next) => {
   try {
     console.log("body:",req.body)
-    const data = req.body;
-    const user = await User.create(data)
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      picturePath,
+      friends,
+      location,
+    } = req.body;
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: passwordHash,
+      picturePath,
+      friends,
+      location,
+    });
+    const user = await User.create(newUser)
     console.log("user", user);
     return res
       .status(200)

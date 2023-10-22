@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import database from "./Data/database";
 import userRoutes from "./Route/UserRoute";
 import postRoutes from "./Route/PostRoute";
+import loginRoutes from "./Route/authRoute"
 import cors from "cors";
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.get("/", ( req:Request, res: Response) => {
 });
 
+app.use("/auth",loginRoutes)
 app.use("/users", userRoutes);
 app.use("/post", postRoutes);
 

@@ -4,12 +4,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserFriends = exports.addRemoveFriend = exports.deleteUser = exports.updateUser = exports.getUser = exports.getUserById = exports.createUser = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const UserModel_1 = __importDefault(require("../Models/UserModel"));
 const createUser = async (req, res, next) => {
     try {
         console.log("body:", req.body);
-        const data = req.body;
-        const user = await UserModel_1.default.create(data);
+        const { firstName, lastName, email, password, picturePath, friends, location, } = req.body;
+        const salt = await bcrypt_1.default.genSalt();
+        const passwordHash = await bcrypt_1.default.hash(password, salt);
+        const newUser = new UserModel_1.default({
+            firstName,
+            lastName,
+            email,
+            password: passwordHash,
+            picturePath,
+            friends,
+            location,
+        });
+        const user = await UserModel_1.default.create(newUser);
         console.log("user", user);
         return res
             .status(200)
@@ -60,7 +72,7 @@ const deleteUser = async (req, res, next) => {
         const { id } = req.params;
         const isDeleted = await UserModel_1.default.findByIdAndDelete(id);
         if (!isDeleted)
-            throw new Error("Failed to delete todo");
+            throw new Error("Failed to delete User");
         return res.status(200).json({ message: "user deleted successfully!" });
     }
     catch (error) {

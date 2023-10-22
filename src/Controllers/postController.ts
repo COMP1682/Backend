@@ -134,6 +134,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         }
         post.comments = post.comments.filter((t) => t != timeComment && id != userId )
 
+        await post.save();
         return res.status(200).json({ message: "user deleted successfully!" });
         }   catch (error: any) {
          return res.status(500).json({ message: error.message });
