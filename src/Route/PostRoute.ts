@@ -16,8 +16,8 @@ router.post("/createPost/",verifyToken , createPost);
 
 /* READ */
 
-router.get("/getUser/:id",verifyToken ,getUserPosts);
-router.get("/getUser/", getFeedPosts);
+router.get("/getUserPost/:id",verifyToken ,getUserPosts);
+router.get("/getPost/", getFeedPosts);
 
 /* UPDATE */
 router.patch("/likePost/:id/", verifyToken, likePost);
