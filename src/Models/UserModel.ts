@@ -28,7 +28,7 @@ const usersSchema = new mongoose.Schema({
           require:false,
       },
       picture:{
-        type:Array<String>,
+        type:String,
         require:false,
       },
 });

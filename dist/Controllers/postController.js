@@ -8,8 +8,10 @@ const PostModel_1 = __importDefault(require("../Models/PostModel"));
 const UserModel_1 = __importDefault(require("../Models/UserModel"));
 const createPost = async (req, res, next) => {
     try {
-        const { userId, description, picturePath } = req.body;
+        const { userId } = req.params;
+        const { description, picturePath } = req.body;
         const user = await UserModel_1.default.findById(userId);
+        console.log("userId", userId);
         if (user == null) {
             return res.status(200).json({ message: "User Not Found" });
         }

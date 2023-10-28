@@ -52,7 +52,7 @@ const usersSchema = new mongoose.Schema({
         require: false,
     },
     picture: {
-        type: (Array),
+        type: String,
         require: false,
     },
 });

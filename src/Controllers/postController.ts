@@ -6,8 +6,10 @@ import { time, timeStamp } from "console";
 
 export const createPost: RequestHandler = async (req, res, next) => {
     try {
-      const { userId, description, picturePath } = req.body;
+      const {userId} = req.params;
+      const { description, picturePath } = req.body;
       const user = await User.findById(userId);
+      console.log("userId",userId);
       if(user == null)
       {
         return res.status(200).json({message: "User Not Found"});

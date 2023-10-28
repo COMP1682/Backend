@@ -12,7 +12,7 @@ import { verifyToken } from "../Middleware/auth";
 const router = express.Router();
 
 /*POST */
-router.post("/createPost/",verifyToken , createPost);
+router.post("/createPost/:userId",verifyToken , createPost);
 
 /* READ */
 

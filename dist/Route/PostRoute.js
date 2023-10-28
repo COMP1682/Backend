@@ -8,10 +8,10 @@ const postController_1 = require("../Controllers/postController");
 const auth_1 = require("../Middleware/auth");
 const router = express_1.default.Router();
 /*POST */
-router.post("/createPost/", auth_1.verifyToken, postController_1.createPost);
+router.post("/createPost/:userId", auth_1.verifyToken, postController_1.createPost);
 /* READ */
-router.get("/getUser/:id", auth_1.verifyToken, postController_1.getUserPosts);
-router.get("/getUser/", postController_1.getFeedPosts);
+router.get("/getUserPost/:id", auth_1.verifyToken, postController_1.getUserPosts);
+router.get("/getPost/", postController_1.getFeedPosts);
 /* UPDATE */
 router.patch("/likePost/:id/", auth_1.verifyToken, postController_1.likePost);
 router.patch("/addComment/:id/", auth_1.verifyToken, postController_1.addComment);
