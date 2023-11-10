@@ -7,7 +7,7 @@ import { time, timeStamp } from "console";
 export const createPost: RequestHandler = async (req, res, next) => {
     try {
       const {userId} = req.params;
-      const { description, picturePath } = req.body;
+      const { description, picturePath } = JSON.parse(req.body);
       const user = await User.findById(userId);
       console.log("userId",userId);
       if(user == null)
@@ -20,7 +20,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         lastName: user.lastName,
         location: user.location,
         description,
-        userPicturePath: user?.picture,
+        // userPicturePath: user?.picture,
         picturePath,
         likes: {},
         comments: [],

@@ -27,10 +27,10 @@ const usersSchema = new mongoose.Schema({
           type:String,
           require:false,
       },
-      picture:{
-        type:String,
-        require:false,
-      },
+      // picture:{
+      //   type:String,
+      //   require:false,
+      // },
 });
 const user = mongoose.model("user", usersSchema);
 export default user;

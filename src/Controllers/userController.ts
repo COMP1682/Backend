@@ -60,7 +60,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
 export const updateUser: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const data = req.body;
+    const data = JSON.parse(req.body);
     const user = await User.findByIdAndUpdate({_id:id}, data, { new: true });
     return res
       .status(200)
