@@ -2,7 +2,6 @@ import { RequestHandler } from "express";
 
 import Post from "../Models/PostModel";
 import User from "../Models/UserModel";
-import { time, timeStamp } from "console";
 
 export const createPost: RequestHandler = async (req, res, next) => {
     try {
