@@ -122,7 +122,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
             return res.status(404).json({message : "post is not found"})
         }
         
-        const newComment = new Post({
+        const newComment = new Comment({
           userId,
           postId:id,
           comment:comment,
