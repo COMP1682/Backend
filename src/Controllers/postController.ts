@@ -74,6 +74,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
       }
       else
       {
+      const comment = await Comment.findByIdAndDelete({postId:id});
       const post = await Post.findByIdAndDelete({_id:id,userId:userId});
       res.status(200).json(post);
       }
@@ -148,12 +149,18 @@ export const createPost: RequestHandler = async (req, res, next) => {
     try {
         const { id } = req.params;
         const {userId,timeComment} = req.body;
-        const post = await Post.findById(id);
+        const checkComment = await Comment.findById(id);
+        if(checkComment == null)
+        {
+            return res.status(404).json({message: "comment is not found"})
+        }
+        const post = await Post.findById(checkComment.postId);
         if(post == null)
         {
             return res.status(404).json({message: "post is not found"})
         }
-        post.comments = post.comments.filter((t) => t != timeComment && id != userId )
+        const comment = await Comment.findByIdAndDelete({_id:id});
+        post.comments = post.comments.filter((id) => id != checkComment._id)
 
         await post.save();
         return res.status(200).json({ message: "user deleted successfully!" });
