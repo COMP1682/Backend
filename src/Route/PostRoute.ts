@@ -21,7 +21,7 @@ router.get("/getPost/", getFeedPosts);
 
 /* UPDATE */
 router.patch("/likePost/:id/", verifyToken, likePost);
-router.patch("/addComment/:id/",verifyToken, addComment)
+router.post("/addComment/:id/",verifyToken, addComment)
 router.patch("/deleteComment/:id/",verifyToken, deleteComment)
 router.patch("/editPost/:id/",verifyToken, editPost)
 router.delete("/deletePost/:id/",verifyToken, deletePost)
