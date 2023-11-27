@@ -22,7 +22,7 @@ database.connectData();
 app.use(express.text());
 app.use(bodyParser.json());
 
-app.get("/", ( req:Request, res: Response) => {
+app.get("/", cors, ( req:Request, res: Response) => {
 });
 
 app.use("/users", userRoutes);
