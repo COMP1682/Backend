@@ -8,11 +8,12 @@ import {createPost
     ,editPost
     ,deletePost} from "../Controllers/postController"
 import { verifyToken } from "../Middleware/auth";
+import cors from "cors"
 
 const router = express.Router();
 
 /*POST */
-router.post("/createPost/:userId",verifyToken , createPost);
+router.post("/createPost/:userId",cors,verifyToken , createPost);
 
 /* READ */
 
