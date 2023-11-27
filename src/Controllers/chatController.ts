@@ -1,30 +1,32 @@
-// import { RequestHandler } from "express";
-// import User from "../Models/UserModel";
-// import ChatModel from '../Models/ChatModel';
-// import io from 'socket.io';
+import { RequestHandler } from "express";
+import User from "../Models/UserModel";
+import ChatModel from '../Models/ChatModel';
+import {io} from '../index';
+import { isObjectBindingPattern } from "typescript";
 
-//   export const ShowMessagesChatService : RequestHandler = async (req, res,next) =>{
-//     const messages = await ChatModel.find().sort('createdAt');
 
-//     return res.status(200).json(messages);
-//   }
+  export const ShowMessagesChatService : RequestHandler = async (req, res,next) =>{
+    const messages = await ChatModel.find().sort('createdAt');
 
-//   export const SendMessageChatService : RequestHandler = async (req, res,next) => {
-//     const {userId} = req.params;
-//     const {content} = req.body;
-//     const user = await User.findById(userId);
+    return res.status(200).json(messages);
+  }
 
-//     if (!user) {
-//       return res.status(404).json('User not exists');
-//     }
+  export const SendMessageChatService : RequestHandler = async (req, res,next) => {
+    const {userId} = req.params;
+    const {content} = req.body;
+    const user = await User.findById(userId);
 
-//     const message = new ChatModel({
-//       userId,
-//       content,
-//     });
+    if (!user) {
+      return res.status(404).json('User not exists');
+    }
 
-//     await message.save();
+    const message = new ChatModel({
+      userId,
+      content,
+    });
 
-//     io.emit('message', message);
-//     return res.status(200).json(message);
-//   }
+    await message.save();
+
+    io.emit('message', message);
+    return res.status(200).json(message);
+  }
