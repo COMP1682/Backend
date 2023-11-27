@@ -16,7 +16,7 @@ const app: Express = express();
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
-//app.use(cors());
+app.use(cors());
 database.connectData();
 
 app.use(express.text());
