@@ -85,7 +85,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
   export const likePost : RequestHandler = async (req, res,next) => {
     try {
       const { id } = req.params;
-      const { userId } = JSON.parse(req.body);
+      const { userId } = req.body;
       const post = await Post.findById(id);
       if(post == null)
       {
@@ -115,8 +115,9 @@ export const createPost: RequestHandler = async (req, res, next) => {
     try{
         const {id} = req.params;
         const {userId, comment} = JSON.parse(req.body);
-
+        const user = await User.findById(userId);
         const post = await Post.findById(id);
+        const fullName = user?.firstName? + user?.lastName : String
         if(post == null)
         {
             return res.status(404).json({message : "post is not found"})
@@ -124,6 +125,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         
         const newComment = new Comment({
           userId,
+          userName:fullName,
           postId:id,
           comment:comment,
           Date:new Date().toLocaleDateString(),
