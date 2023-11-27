@@ -1,4 +1,4 @@
-import http, { request } from 'http';
+import https, { request } from 'https';
 import express, {Express, Request, Response} from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
@@ -13,8 +13,8 @@ dotenv.config();
 
 const  PORT  = process.env.PORT || 3000;
 const app: Express = express();  
-const httpServer = http.createServer(app);
-export const io = new Server(httpServer);
+const httpsServer = https.createServer(app);
+export const io = new Server(httpsServer);
 
 app.use(cors());
 database.connectData();
@@ -37,4 +37,4 @@ app.use("/auth",loginRoutes)
 app.use("/post", postRoutes);
 
 
-httpServer.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
+httpsServer.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
