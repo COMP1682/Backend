@@ -22,9 +22,9 @@ app.use((0, cors_1.default)());
 database_1.default.connectData();
 app.use(express_1.default.text());
 app.use(body_parser_1.default.json());
-app.get("/", (req, res) => {
+app.get("/", cors_1.default, (req, res) => {
 });
-app.use("/auth", authRoute_1.default);
 app.use("/users", UserRoute_1.default);
+app.use("/auth", authRoute_1.default);
 app.use("/post", PostRoute_1.default);
 httpServer.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
