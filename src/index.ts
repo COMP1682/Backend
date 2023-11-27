@@ -26,10 +26,10 @@ io.on('connect', (socket) => {
     console.log('socket io connected');
     io.emit('message', 'a dog');
     io.emit('baby', 'a cat');
-    io.on('baby', (msg) => {
+    socket.on('baby', (msg) => {
       console.log(msg);
     });
-    io.on('disconnect', (msg) => {
+    socket.on('disconnect', (msg) => {
       console.log('io disconnected');
     });
   });
