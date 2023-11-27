@@ -67,12 +67,15 @@ export const createPost: RequestHandler = async (req, res, next) => {
       const { id } = req.params;
       const {data , userId} = req.body;
       const checkPost = await Post.findById({_id:id});
-      if(userId !== checkPost?._id)
+      if(userId != checkPost?.userId)
       {
         res.status(200).json({ message:"Wrong user"});
       }
+      else
+      {
       const post = await Post.findByIdAndDelete({_id:id,userId:userId});
       res.status(200).json(post);
+      }
     } catch (err : any) {
       res.status(404).json({ message: err.message });
     }
