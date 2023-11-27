@@ -10,6 +10,15 @@
     "routes": [
         {
           "src": "/(.*)",
+          "dest": "src/index.ts",
+          "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+          "headers": {
+            "Access-Control-Allow-Origin": "*"
+          }
+        },
+        {
+          "src": "/post",
+          "dest": "src/Route/PostRoute.ts",
           "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
           "headers": {
             "Access-Control-Allow-Origin": "*"
