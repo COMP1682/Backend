@@ -12,17 +12,17 @@ import { verifyToken } from "../Middleware/auth";
 const router = express.Router();
 
 /*POST */
-router.post("/createPost/:userId" , createPost);
+router.post("/createPost/:userId",verifyToken , createPost);
 
 /* READ */
 
-router.get("/getUserPost/:id" ,getUserPosts);
+router.get("/getUserPost/:id",verifyToken ,getUserPosts);
 router.get("/getPost/", getFeedPosts);
 
 /* UPDATE */
-router.patch("/likePost/:id/", likePost);
-router.patch("/addComment/:id/", addComment)
-router.patch("/deleteComment/:id/", deleteComment)
-router.patch("/editPost/:id/", editPost)
-router.delete("/deletePost/:id/", deletePost)
+router.patch("/likePost/:id/", verifyToken, likePost);
+router.patch("/addComment/:id/",verifyToken, addComment)
+router.patch("/deleteComment/:id/",verifyToken, deleteComment)
+router.patch("/editPost/:id/",verifyToken, editPost)
+router.delete("/deletePost/:id/",verifyToken, deletePost)
 export default router;
