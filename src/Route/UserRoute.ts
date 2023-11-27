@@ -14,12 +14,12 @@ const router = express.Router();
 router.post("/createUser/", createUser);
 
 /* READ */
-router.get("/getUser/:id",verifyToken, getUserById);
-router.get("/getUser/",verifyToken, getUser);
-router.get("/getUserFriends/:id/", verifyToken ,getUserFriends);
+router.get("/getUser/:id", getUserById);
+router.get("/getUser/", getUser);
+router.get("/getUserFriends/:id/" ,getUserFriends);
 
 /* UPDATE */
-router.patch("/updateUser/:id/",verifyToken, updateUser);
-router.delete("/deleteUser/:id/",verifyToken, deleteUser)
-router.patch("/addRemoveFriend/:id/:friendId/",verifyToken, addRemoveFriend)
+router.patch("/updateUser/:id/", updateUser);
+router.delete("/deleteUser/:id/", deleteUser)
+router.patch("/addRemoveFriend/:id/:friendId/", addRemoveFriend)
 export default router;
