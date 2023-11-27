@@ -117,7 +117,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         const {userId, comment} = JSON.parse(req.body);
         const user = await User.findById(userId);
         const post = await Post.findById(id);
-        const fullName = user?.firstName? + user?.lastName : String
+        const fullName  = user?.firstName.concat(" ".concat(user?.lastName));
         if(post == null)
         {
             return res.status(404).json({message : "post is not found"})
