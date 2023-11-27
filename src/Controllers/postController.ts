@@ -19,7 +19,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         lastName: user.lastName,
         location: user.location,
         description,
-        // userPicturePath: user?.picture,
+        userPicturePath: user?.picturePath,
         picturePath,
         likes: {},
         comments: [],
