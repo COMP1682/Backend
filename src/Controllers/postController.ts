@@ -74,7 +74,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
       }
       else
       {
-      const comment = await Comment.findByIdAndDelete({postId:id});
+      const comment = await Comment.deleteMany({postId:id});
       const post = await Post.findByIdAndDelete({_id:id,userId:userId});
       res.status(200).json(post);
       }
