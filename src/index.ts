@@ -16,12 +16,23 @@ const app: Express = express();
 const httpServer = http.createServer(app);
 export const io = new Server(httpServer);
 
-io.emit("message","test");
 app.use(cors());
 database.connectData();
 
 app.use(express.text());
 app.use(bodyParser.json());
+
+io.on('connect', (socket) => {
+    console.log('socket io connected');
+    io.emit('message', 'a dog');
+    io.emit('baby', 'a cat');
+    io.on('baby', (msg) => {
+      console.log(msg);
+    });
+    io.on('disconnect', (msg) => {
+      console.log('io disconnected');
+    });
+  });
 
 app.get("/", cors, ( req:Request, res: Response) => {
 });
