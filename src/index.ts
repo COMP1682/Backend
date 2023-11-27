@@ -16,16 +16,7 @@ const app: Express = express();
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
-const options = [
-    cors({
-      origin: '*',
-      methods: '*',
-      allowedHeaders: ['Content-Type', 'Authorization'],
-      credentials: true,
-    })
-  ];
-  
-app.use(options);
+app.use(cors());
 database.connectData();
 
 app.use(express.text());
