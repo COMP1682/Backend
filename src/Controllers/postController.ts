@@ -120,7 +120,8 @@ export const createPost: RequestHandler = async (req, res, next) => {
         {
             return res.status(404).json({message : "post is not found"})
         }
-        const updateComment = [userId,comment,Date.now.toString()]
+        
+        const updateComment = [userId,comment,new Date().toLocaleDateString()]
 
         post.comments.push(updateComment);
 
