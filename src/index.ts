@@ -25,8 +25,8 @@ app.use(bodyParser.json());
 app.get("/", ( req:Request, res: Response) => {
 });
 
-app.use("/auth",loginRoutes)
 app.use("/users", userRoutes);
+app.use("/auth",loginRoutes)
 app.use("/post", postRoutes);
 
 
