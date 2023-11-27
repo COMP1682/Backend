@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 
 import Post from "../Models/PostModel";
 import User from "../Models/UserModel";
+import Comment from "../Models/CommentModel";
 
 export const createPost: RequestHandler = async (req, res, next) => {
     try {
@@ -121,7 +122,15 @@ export const createPost: RequestHandler = async (req, res, next) => {
             return res.status(404).json({message : "post is not found"})
         }
         
-        const updateComment = [userId,comment,new Date().toLocaleDateString()]
+        const newComment = new Post({
+          userId,
+          postId:id,
+          comment:comment,
+          Date:new Date().toLocaleDateString(),
+        });
+        await newComment.save();
+
+        const updateComment = newComment;
 
         post.comments.push(updateComment);
 
