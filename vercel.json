@@ -9,7 +9,7 @@
     
     "routes": [
         {
-          "src": "/travel-api-nu.vercel.app/(.*)",
+          "src": "/(.*)",
           "dest": "src/index.ts",
           "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
           "headers": {
