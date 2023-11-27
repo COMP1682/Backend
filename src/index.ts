@@ -16,7 +16,7 @@ const app: Express = express();
 const httpServer = http.createServer(app);
 export const io = new Server(httpServer);
 
-
+io.emit("message","test");
 app.use(cors());
 database.connectData();
 
