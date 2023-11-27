@@ -13,7 +13,7 @@ import cors from "cors"
 const router = express.Router();
 
 /*POST */
-router.post("/createPost/:userId",cors,verifyToken , createPost);
+router.post("/createPost/:userId" , createPost);
 
 /* READ */
 
