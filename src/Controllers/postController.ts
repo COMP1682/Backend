@@ -35,7 +35,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
 
   export const getFeedPosts : RequestHandler = async (req, res, next) => {
     try {
-      const post = await Post.find();
+      const post = await Post.find().sort({_id:-1});
       res.status(200).json(post);
     } catch (err : any) {
       res.status(404).json({ message: err.message });

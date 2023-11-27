@@ -37,7 +37,7 @@ const createPost = async (req, res, next) => {
 exports.createPost = createPost;
 const getFeedPosts = async (req, res, next) => {
     try {
-        const post = await PostModel_1.default.find();
+        const post = await PostModel_1.default.find().sort({ _id: -1 });
         res.status(200).json(post);
     }
     catch (err) {
