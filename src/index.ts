@@ -24,11 +24,6 @@ app.use(bodyParser.json());
 
 io.on('connect', (socket) => {
     console.log('socket io connected');
-    io.emit('message', 'a dog');
-    io.emit('baby', 'a cat');
-    socket.on('baby', (msg) => {
-      console.log(msg);
-    });
     socket.on('disconnect', (msg) => {
       console.log('io disconnected');
     });
