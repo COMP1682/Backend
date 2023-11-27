@@ -84,7 +84,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
   export const likePost : RequestHandler = async (req, res,next) => {
     try {
       const { id } = req.params;
-      const { userId } = req.body;
+      const { userId } = JSON.parse(req.body);
       const post = await Post.findById(id);
       if(post == null)
       {
@@ -113,7 +113,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
   export const addComment : RequestHandler = async (req, res, next) => {
     try{
         const {id} = req.params;
-        const {userId, comment} = req.body;
+        const {userId, comment} = JSON.parse(req.body);
 
         const post = await Post.findById(id);
         if(post == null)
