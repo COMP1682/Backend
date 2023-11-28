@@ -17,7 +17,7 @@ const SendMessageChatService = async (req, res, next) => {
         const { userId } = req.params;
         const { content, friendId } = req.body;
         const user = await UserModel_1.default.findById(userId);
-        const roomId = userId.concat(" ".concat(friendId));
+        const roomId = userId.concat("-".concat(friendId));
         if (!user) {
             return res.status(404).json('User not exists');
         }

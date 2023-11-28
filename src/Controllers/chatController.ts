@@ -16,7 +16,7 @@ import ChatModel from '../Models/ChatModel';
     const {content,friendId} = req.body;
     const user = await User.findById(userId);
 
-    const roomId = userId.concat(" ".concat(friendId));
+    const roomId = userId.concat("-".concat(friendId));
     if (!user) {
       return res.status(404).json('User not exists');
     }
