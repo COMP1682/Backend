@@ -11,6 +11,7 @@ const database_1 = __importDefault(require("./Data/database"));
 const UserRoute_1 = __importDefault(require("./Route/UserRoute"));
 const PostRoute_1 = __importDefault(require("./Route/PostRoute"));
 const authRoute_1 = __importDefault(require("./Route/authRoute"));
+const chatRoute_1 = __importDefault(require("./Route/chatRoute"));
 const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3001;
@@ -31,4 +32,5 @@ app.get("/", cors_1.default, (req, res) => {
 app.use("/users", UserRoute_1.default);
 app.use("/auth", authRoute_1.default);
 app.use("/post", PostRoute_1.default);
+app.use("/chat", chatRoute_1.default);
 httpsServer.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));

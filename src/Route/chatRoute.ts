@@ -6,7 +6,8 @@ import { verifyToken } from "../Middleware/auth";
 
 const router = express.Router();
 
-router.get('/chat', verifyToken, ShowMessagesChatService);
-router.post('/chat/:userId', verifyToken, SendMessageChatService);
+router.get('/:roomId', verifyToken, ShowMessagesChatService);
+
+router.post('/:userId', verifyToken, SendMessageChatService);
 
 export default router;
