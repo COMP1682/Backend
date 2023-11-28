@@ -17,7 +17,7 @@ const SendMessageChatService = async (req, res, next) => {
         const { userId } = req.params;
         const { content, friendId } = JSON.parse(req.body);
         const user = await UserModel_1.default.findById(userId);
-        const roomId = userId.concat("".concat(friendId));
+        const roomId = userId.concat(" ".concat(friendId));
         if (!user) {
             return res.status(404).json('User not exists');
         }
@@ -30,7 +30,7 @@ const SendMessageChatService = async (req, res, next) => {
         return res.status(200).json(message);
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(502).json({ message: err.message });
     }
 };
 exports.SendMessageChatService = SendMessageChatService;
