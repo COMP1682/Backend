@@ -8,7 +8,7 @@ import ChatModel from '../Models/ChatModel';
     const {roomId} = req.params;
     const useerId1 = roomId.split("-")[0];
     const userId2 = roomId.split("-")[1]
-    const messages = await ChatModel.find({"roomId":{$regex:"useerId1"}}).find({"roomId":{$regex:"userId2"}}).sort('createdAt');
+    const messages = await ChatModel.find({roomId:{$regex:useerId1}}).find({roomId:{$regex:userId2}}).sort('createdAt');
 
     return res.status(200).json(messages);
     }
