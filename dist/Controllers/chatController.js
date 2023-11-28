@@ -27,7 +27,7 @@ const SendMessageChatService = async (req, res, next) => {
             roomId,
         });
         await message.save();
-        const messageRoom = await ChatModel_1.default.find({ roomId });
+        const messageRoom = await ChatModel_1.default.find({ roomId: roomId });
         return res.status(200).json(message);
     }
     catch (err) {
