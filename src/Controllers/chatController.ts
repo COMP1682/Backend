@@ -13,7 +13,7 @@ import ChatModel from '../Models/ChatModel';
   export const SendMessageChatService : RequestHandler = async (req, res,next) => {
     try{
     const {userId} = req.params;
-    const {content,friendId} = JSON.parse(req.body);
+    const {content,friendId} = req.body;
     const user = await User.findById(userId);
 
     const roomId = userId.concat(" ".concat(friendId));
@@ -29,7 +29,9 @@ import ChatModel from '../Models/ChatModel';
 
     await message.save();
 
-    return res.status(200).json(message);
+    const msRoom = await ChatModel.find({roomId:roomId});
+
+    return res.status(200).json(msRoom);
 }
 catch(err : any) {
     res.status(502).json({ message: err.message })

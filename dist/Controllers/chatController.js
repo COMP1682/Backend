@@ -15,7 +15,7 @@ exports.ShowMessagesChatService = ShowMessagesChatService;
 const SendMessageChatService = async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const { content, friendId } = JSON.parse(req.body);
+        const { content, friendId } = req.body;
         const user = await UserModel_1.default.findById(userId);
         const roomId = userId.concat(" ".concat(friendId));
         if (!user) {
@@ -27,7 +27,8 @@ const SendMessageChatService = async (req, res, next) => {
             roomId,
         });
         await message.save();
-        return res.status(200).json(message);
+        const msRoom = await ChatModel_1.default.find({ roomId: roomId });
+        return res.status(200).json(msRoom);
     }
     catch (err) {
         res.status(502).json({ message: err.message });
