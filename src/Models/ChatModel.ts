@@ -10,6 +10,7 @@ const ChatSchema = new Schema(
       type: String,
       required: true,
     },
+    fullName:String,
     roomId: {
       type: String,
       required: true,

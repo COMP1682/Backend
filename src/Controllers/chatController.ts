@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import User from "../Models/UserModel";
 import ChatModel from '../Models/ChatModel';
+import { getUserFriends } from "./userController";
 
 
   export const ShowMessagesChatService : RequestHandler = async (req, res,next) =>{
@@ -23,7 +24,7 @@ import ChatModel from '../Models/ChatModel';
     const {userId} = req.params;
     const {content,friendId} = req.body;
     const user = await User.findById(userId);
-
+    const fullName = user?.firstName.concat(" ".concat(user.lastName));
     const roomId = userId.concat("-".concat(friendId));
     if (!user) {
       return res.status(404).json('User not exists');
@@ -32,6 +33,7 @@ import ChatModel from '../Models/ChatModel';
     const message = new ChatModel({
       userId,
       content,
+      fullName,
       roomId,
     });
 
