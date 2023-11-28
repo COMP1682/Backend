@@ -13,19 +13,25 @@ const ShowMessagesChatService = async (req, res, next) => {
 };
 exports.ShowMessagesChatService = ShowMessagesChatService;
 const SendMessageChatService = async (req, res, next) => {
-    const { userId } = req.params;
-    const { content, friendId } = JSON.parse(req.body);
-    const user = await UserModel_1.default.findById(userId);
-    const roomId = userId.concat("".concat(friendId));
-    if (!user) {
-        return res.status(404).json('User not exists');
+    try {
+        const { userId } = req.params;
+        const { content, friendId } = JSON.parse(req.body);
+        const user = await UserModel_1.default.findById(userId);
+        const roomId = userId.concat("".concat(friendId));
+        if (!user) {
+            return res.status(404).json('User not exists');
+        }
+        const message = new ChatModel_1.default({
+            userId,
+            content,
+            roomId,
+        });
+        await message.save();
+        const messageRoom = await ChatModel_1.default.find({ roomId });
+        return res.status(200).json(message);
     }
-    const message = new ChatModel_1.default({
-        userId,
-        content,
-        roomId,
-    });
-    await message.save();
-    return res.status(200).json(message);
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };
 exports.SendMessageChatService = SendMessageChatService;
