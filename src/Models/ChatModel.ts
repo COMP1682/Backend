@@ -10,7 +10,10 @@ const ChatSchema = new Schema(
       type: String,
       required: true,
     },
-    roomId: String,
+    roomId: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

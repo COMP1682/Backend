@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteComment = exports.addComment = exports.likePost = exports.deletePost = exports.editPost = exports.getUserPosts = exports.getFeedPosts = exports.createPost = void 0;
 const PostModel_1 = __importDefault(require("../Models/PostModel"));
 const UserModel_1 = __importDefault(require("../Models/UserModel"));
+const CommentModel_1 = __importDefault(require("../Models/CommentModel"));
 const createPost = async (req, res, next) => {
     try {
         const { userId } = req.params;
@@ -72,8 +73,15 @@ const deletePost = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { data, userId } = req.body;
-        const post = await PostModel_1.default.findByIdAndDelete({ _id: id, userId: userId });
-        res.status(200).json(post);
+        const checkPost = await PostModel_1.default.findById({ _id: id });
+        if (userId != (checkPost === null || checkPost === void 0 ? void 0 : checkPost.userId)) {
+            res.status(400).json({ message: "Wrong user" });
+        }
+        else {
+            const comment = await CommentModel_1.default.deleteMany({ postId: id });
+            const post = await PostModel_1.default.findByIdAndDelete({ _id: id, userId: userId });
+            res.status(200).json(post);
+        }
     }
     catch (err) {
         res.status(404).json({ message: err.message });
@@ -107,12 +115,22 @@ exports.likePost = likePost;
 const addComment = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { userId, comment } = req.body;
+        const { userId, comment } = JSON.parse(req.body);
+        const user = await UserModel_1.default.findById(userId);
         const post = await PostModel_1.default.findById(id);
+        const fullName = user === null || user === void 0 ? void 0 : user.firstName.concat(" ".concat(user === null || user === void 0 ? void 0 : user.lastName));
         if (post == null) {
             return res.status(404).json({ message: "post is not found" });
         }
-        const updateComment = [userId, comment, Date.now.toString()];
+        const newComment = new CommentModel_1.default({
+            userId,
+            userName: fullName,
+            postId: id,
+            comment: comment,
+            Date: new Date().toLocaleDateString(),
+        });
+        await newComment.save();
+        const updateComment = newComment;
         post.comments.push(updateComment);
         await post.save();
         res.status(200).json({ message: "Comment is upload successfully" });
@@ -126,11 +144,16 @@ const deleteComment = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { userId, timeComment } = req.body;
-        const post = await PostModel_1.default.findById(id);
+        const checkComment = await CommentModel_1.default.findById(id);
+        if (checkComment == null) {
+            return res.status(404).json({ message: "comment is not found" });
+        }
+        const post = await PostModel_1.default.findById(checkComment.postId);
         if (post == null) {
             return res.status(404).json({ message: "post is not found" });
         }
-        post.comments = post.comments.filter((t) => t != timeComment && id != userId);
+        const comment = await CommentModel_1.default.findByIdAndDelete({ _id: id });
+        post.comments = post.comments.filter((id) => id != checkComment._id);
         await post.save();
         return res.status(200).json({ message: "user deleted successfully!" });
     }

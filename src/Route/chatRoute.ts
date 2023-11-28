@@ -8,3 +8,5 @@ const router = express.Router();
 
 router.get('/chat', verifyToken, ShowMessagesChatService);
 router.post('/chat', verifyToken, SendMessageChatService);
+
+export default router;
