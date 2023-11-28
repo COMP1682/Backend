@@ -6,12 +6,14 @@ import ChatModel from '../Models/ChatModel';
   export const ShowMessagesChatService : RequestHandler = async (req, res,next) =>{
     try{
     const {roomId} = req.params;
-    const messages = await ChatModel.find({roomId:roomId}).sort('createdAt');
+    const useerId1 = roomId.split("-")[0];
+    const userId2 = roomId.split("-")[1]
+    const messages = await ChatModel.find({"roomId":{$regex:"useerId1"}}).find({"roomId":{$regex:"userId2"}}).sort('createdAt');
 
     return res.status(200).json(messages);
     }
     catch(err : any) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.messageRoom })
     }
   }
 
