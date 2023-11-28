@@ -29,7 +29,6 @@ import ChatModel from '../Models/ChatModel';
 
     await message.save();
 
-    const messageRoom = await ChatModel.find({roomId:roomId});
     return res.status(200).json(message);
 }
 catch(err : any) {
