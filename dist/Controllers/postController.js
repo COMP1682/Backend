@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteComment = exports.addComment = exports.likePost = exports.deletePost = exports.editPost = exports.getUserPosts = exports.getFeedPosts = exports.createPost = void 0;
+exports.deleteComment = exports.getComments = exports.addComment = exports.likePost = exports.deletePost = exports.editPost = exports.getUserPosts = exports.getFeedPosts = exports.createPost = void 0;
 const PostModel_1 = __importDefault(require("../Models/PostModel"));
 const UserModel_1 = __importDefault(require("../Models/UserModel"));
 const CommentModel_1 = __importDefault(require("../Models/CommentModel"));
@@ -25,7 +25,6 @@ const createPost = async (req, res, next) => {
             userPicturePath: user === null || user === void 0 ? void 0 : user.picturePath,
             picturePath,
             likes: {},
-            comments: [],
         });
         await newPost.save();
         const post = await PostModel_1.default.find();
@@ -127,12 +126,10 @@ const addComment = async (req, res, next) => {
             userName: fullName,
             postId: id,
             comment: comment,
+            isValidUserComment: false,
             Date: new Date().toLocaleDateString(),
         });
         await newComment.save();
-        const updateComment = newComment;
-        post.comments.push(updateComment);
-        await post.save();
         res.status(200).json({ message: "Comment is upload successfully" });
     }
     catch (err) {
@@ -140,11 +137,23 @@ const addComment = async (req, res, next) => {
     }
 };
 exports.addComment = addComment;
+const getComments = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
+        const comments = await CommentModel_1.default.find({ postId });
+        res.status(200).json(comments);
+    }
+    catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+exports.getComments = getComments;
 const deleteComment = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { deleteCommentId } = req.params;
+        console.log("commentid", deleteCommentId);
         const { userId, timeComment } = req.body;
-        const checkComment = await CommentModel_1.default.findById(id);
+        const checkComment = await CommentModel_1.default.findById(deleteCommentId);
         if (checkComment == null) {
             return res.status(404).json({ message: "comment is not found" });
         }
@@ -152,8 +161,7 @@ const deleteComment = async (req, res, next) => {
         if (post == null) {
             return res.status(404).json({ message: "post is not found" });
         }
-        const comment = await CommentModel_1.default.findByIdAndDelete({ _id: id });
-        post.comments = post.comments.filter((id) => id != checkComment._id);
+        const comment = await CommentModel_1.default.findByIdAndDelete({ _id: deleteCommentId });
         await post.save();
         return res.status(200).json({ message: "user deleted successfully!" });
     }

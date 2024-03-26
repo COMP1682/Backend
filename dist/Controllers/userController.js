@@ -36,7 +36,15 @@ const getUserById = async (req, res, next) => {
     try {
         const { id } = req.params;
         const user = await UserModel_1.default.findById(id);
-        return res.status(200).json({ message: "Get user!", data: user });
+        const responseUser = new UserModel_1.default({
+            firstName: user === null || user === void 0 ? void 0 : user.firstName,
+            lastName: user === null || user === void 0 ? void 0 : user.lastName,
+            emai: user === null || user === void 0 ? void 0 : user.email,
+            picturePath: user === null || user === void 0 ? void 0 : user.picturePath,
+            friends: user === null || user === void 0 ? void 0 : user.friends,
+            location: user === null || user === void 0 ? void 0 : user.location,
+        });
+        return res.status(200).json({ message: "Get user!", data: responseUser });
     }
     catch (error) {
         return res.status(500).json({ message: error.message });

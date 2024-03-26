@@ -17,7 +17,7 @@ export const login : RequestHandler = async (req, res, next) => {
         }
         const key = process.env.JWT_TOKEN || "881834456304"
         const token = jwt.sign(user.firstName , key);
-        delete user.password;
+        user.password?.replace( user.password,"");
         res.status(200).json({ token, user });
       } catch (err : any) {
         res.status(500).json({ error: err.message });

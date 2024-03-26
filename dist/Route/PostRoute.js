@@ -12,10 +12,11 @@ router.post("/createPost/:userId", auth_1.verifyToken, postController_1.createPo
 /* READ */
 router.get("/getUserPost/:id", auth_1.verifyToken, postController_1.getUserPosts);
 router.get("/getPost/", postController_1.getFeedPosts);
+router.get("/getComments/:postId", auth_1.verifyToken, postController_1.getComments);
 /* UPDATE */
 router.patch("/likePost/:id/", auth_1.verifyToken, postController_1.likePost);
 router.post("/addComment/:id/", auth_1.verifyToken, postController_1.addComment);
-router.patch("/deleteComment/:id/", auth_1.verifyToken, postController_1.deleteComment);
+router.delete("/deleteComment/:deleteCommentId/", auth_1.verifyToken, postController_1.deleteComment);
 router.patch("/editPost/:id/", auth_1.verifyToken, postController_1.editPost);
 router.delete("/deletePost/:id/", auth_1.verifyToken, postController_1.deletePost);
 exports.default = router;

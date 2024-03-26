@@ -18,6 +18,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isValidUserComment: {
+      type: Boolean,
+      required: true,
+    },
     Date: String,
   },
   { timestamps: true }

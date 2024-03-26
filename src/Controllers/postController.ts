@@ -23,7 +23,6 @@ export const createPost: RequestHandler = async (req, res, next) => {
         userPicturePath: user?.picturePath,
         picturePath,
         likes: {},
-        comments: [],
       });
       await newPost.save();
   
@@ -129,15 +128,11 @@ export const createPost: RequestHandler = async (req, res, next) => {
           userName:fullName,
           postId:id,
           comment:comment,
+          isValidUserComment:false,
           Date:new Date().toLocaleDateString(),
         });
         await newComment.save();
 
-        const updateComment = newComment;
-
-        post.comments.push(updateComment);
-
-        await post.save();
         res.status(200).json({message : "Comment is upload successfully"})
     } catch(err : any)
     {
@@ -145,11 +140,23 @@ export const createPost: RequestHandler = async (req, res, next) => {
     }
   }
 
+  export const getComments: RequestHandler = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
+        const comments = await Comment.find({ postId });
+        res.status(200).json(comments);
+    }
+    catch (error: any) {
+      return res.status(500).json({ message: error.message });
+     }
+    };
+
   export const deleteComment: RequestHandler = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { deleteCommentId } = req.params;
+        console.log("commentid",deleteCommentId)
         const {userId,timeComment} = req.body;
-        const checkComment = await Comment.findById(id);
+        const checkComment = await Comment.findById(deleteCommentId);
         if(checkComment == null)
         {
             return res.status(404).json({message: "comment is not found"})
@@ -159,8 +166,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
         {
             return res.status(404).json({message: "post is not found"})
         }
-        const comment = await Comment.findByIdAndDelete({_id:id});
-        post.comments = post.comments.filter((id) => id != checkComment._id)
+        const comment = await Comment.findByIdAndDelete({_id:deleteCommentId});
 
         await post.save();
         return res.status(200).json({ message: "user deleted successfully!" });

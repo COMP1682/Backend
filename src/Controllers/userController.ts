@@ -42,7 +42,17 @@ export const getUserById: RequestHandler = async (req, res, next) => {
     try {
       const {id} = req.params;
       const user = await User.findById(id);
-      return res.status(200).json({ message: "Get user!", data: user });
+      const responseUser = new User(
+        {
+          firstName : user?.firstName,
+      lastName: user?.lastName,
+      emai : user?.email,
+      picturePath: user?.picturePath,
+      friends: user?.friends,
+      location: user?.location,
+        }
+      )
+      return res.status(200).json({ message: "Get user!", data: responseUser });
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }

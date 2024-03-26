@@ -21,6 +21,10 @@ const commentSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    isValidUserComment: {
+        type: Boolean,
+        required: true,
+    },
     Date: String,
 }, { timestamps: true });
 const Comment = mongoose_1.default.model("Comment", commentSchema);

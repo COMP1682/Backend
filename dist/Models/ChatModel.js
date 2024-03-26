@@ -33,6 +33,7 @@ const ChatSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    fullName: String,
     roomId: {
         type: String,
         required: true,
