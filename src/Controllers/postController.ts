@@ -45,7 +45,7 @@ export const createPost: RequestHandler = async (req, res, next) => {
   export const getUserPosts : RequestHandler = async (req, res,next) => {
     try {
       const { userId } = req.params;
-      const post = await Post.find({ userId }).sort({_id:-1});
+      const post = await Post.find({ userId :userId }).sort({_id:-1});
       res.status(200).json(post);
     } catch (err : any) {
       res.status(404).json({ message: err.message });

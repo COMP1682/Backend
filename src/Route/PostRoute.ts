@@ -17,7 +17,7 @@ router.post("/createPost/:userId",verifyToken , createPost);
 
 /* READ */
 
-router.get("/getUserPost/:id",verifyToken ,getUserPosts);
+router.get("/getUserPost/:userId",verifyToken ,getUserPosts);
 router.get("/getPost/", getFeedPosts);
 router.get("/getComments/:postId",verifyToken ,getComments);
 
