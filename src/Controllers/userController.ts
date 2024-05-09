@@ -96,6 +96,10 @@ export const addRemoveFriend : RequestHandler = async (req, res, next) => {
     const { id, friendId } = req.params;
     const user = await User.findById(id);
     const friend = await User.findById(friendId);
+    if(id == friendId)
+    {
+      return res.status(500).json({messageL:"user cannot add their account to their friend list"})
+    }
     if(user == null || friend == null)
     {
       return res.status(200).json({message: "user not found"})

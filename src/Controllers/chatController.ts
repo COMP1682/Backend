@@ -10,7 +10,7 @@ import { getUserFriends } from "./userController";
     const userId1 = roomId.split("-")[0];
     const userId2 = roomId.split("-")[1]
     const roomId2 =  userId2.concat("-".concat(userId1));
-    const messages = await ChatModel.find({$or:[{roomId:roomId},{roomId:roomId2}]}).sort('createdAt');
+    const messages = await ChatModel.find({$or:[{roomId:roomId},{roomId:roomId2}]}).sort({'createdAt':1});
 
     return res.status(200).json(messages);
     }
